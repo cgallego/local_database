@@ -233,6 +233,7 @@ class Send(object):
         chgSeg = int(raw_input('\n Enter 1 to modify segmentation, 0 to skip: ') )
         if chgSeg == 1:
             #  Get z slice
+            self.loadDisplay.renderer1.RemoveActor(self.loadDisplay.actor_mesh)
             LesionZslice = self.loadDisplay.zImagePlaneWidget.GetSliceIndex()
             
             print "\n Displaying picker for lesion segmentation"
@@ -251,9 +252,8 @@ class Send(object):
             print axis_lengths
             self.eu_dist_seg = float( sqrt( axis_lengths[0] + axis_lengths[1])) # only measure x-y euclidian distance betweeen extreme points
             print "eu_dist_seg : " 
-            print self.eu_dist_seg 
+            print self.eu_dist_seg          
             
-            self.loadDisplay.renderer1.RemoveActor(self.loadDisplay.actor_mesh)
             
         # finally transform centroid world coords to ijk indexes
         im_pt = [0,0,0]
