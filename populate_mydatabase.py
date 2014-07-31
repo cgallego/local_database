@@ -33,7 +33,7 @@ if __name__ == '__main__':
     file_muscleVOI = open(sys.argv[2],"r")
     file_muscleVOI.seek(0)
 
-    for k in range(59):
+    for k in range(78):
         line = file_ids.readline()
         line_muscleVOI = file_muscleVOI.readline()
     print line
@@ -69,7 +69,7 @@ if __name__ == '__main__':
         #############################                  
         ###### 3) Check segmentation accuracy with annotations
         #############################
-        [series_path, phases_series, lesion3D] = Send2DB.checkSegment(path_rootFolder, fileline, line, cond, StudyID, DicomExamNumber, SeriesID, Lesionfile, path_T2Series)
+        [series_path, phases_series, lesion3D] = Send2DB.checkSegment(path_rootFolder, fileline, line, cond, StudyID, DicomExamNumber, SeriesID, Lesionfile, path_T2Series, T2SeriesID)
         
         #############################
         # 4) Extract Lesion and Muscle Major pectoralies signal                                   

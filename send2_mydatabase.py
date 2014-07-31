@@ -133,7 +133,7 @@ class Send(object):
         return img_folder, rowCase
 
 
-    def checkSegment(self, path_rootFolder, fileline, line, cond, StudyID, DicomExamNumber, SeriesID, Lesionfile, path_T2Series):  
+    def checkSegment(self, path_rootFolder, fileline, line, cond, StudyID, DicomExamNumber, SeriesID, Lesionfile, path_T2Series, T2SeriesID):  
         """ Load a previously existing segmentation or create a new one and check with annotations, if any"""
         #############################                  
         ###### 2) Check segmentation accuracy with annotations
@@ -152,26 +152,31 @@ class Send(object):
         print "Data Structure: %s" % self.lesion3D.GetClassName()
         print "Number of points: %d" % int(self.lesion3D.GetNumberOfPoints())
         print "Number of cells: %d" % int(self.lesion3D.GetNumberOfCells())
-        
-        #############################        
-        ###### Extract T2 features, Process T2 and visualize
-        #############################
-        ###### Start by Loading 
-        print "Start by loading T2 volume..."       
-        self.load.readT2(path_T2Series)
-        
+                
         #############################
         # 4) Parse annotations (display and pick corresponding to lesion)
         #############################
+        if (T2SeriesID != 'NONE'):                
+            ###### Start by Loading 
+            print "Start by loading T2 volume..."       
+            self.load.readT2(path_T2Series)
+            
         print "\n Visualize volumes..."
                              
         self.loadDisplay.addSegment(self.lesion3D, (0,1,0), interact=False)
         self.createSegment.saveSegmentation(path_rootFolder+os.sep+'segmentations', self.lesion3D, lesionfilename=StudyID+'_'+DicomExamNumber+'_'+Lesionfile+'.vtk') 
-        self.loadDisplay.visualize(self.load.DICOMImages, self.load.image_pos_pat, self.load.image_ori_pat, sub=True, postS=1, interact=False)
-
-        print "\n Visualize addT2visualize ..."
-        self.loadDisplay.addT2visualize(self.load.T2Images, self.load.T2image_pos_pat, self.load.T2image_ori_pat, self.load.T2dims, self.load.T2spacing, interact=True)
         
+        #############################        
+        ###### Extract T2 features, Process T2 and visualize
+        #############################
+        if (T2SeriesID != 'NONE'):     
+            self.loadDisplay.visualize(self.load.DICOMImages, self.load.image_pos_pat, self.load.image_ori_pat, sub=True, postS=1, interact=False)
+            print "\n Visualize addT2visualize ..."
+            self.loadDisplay.addT2visualize(self.load.T2Images, self.load.T2image_pos_pat, self.load.T2image_ori_pat, self.load.T2dims, self.load.T2spacing, interact=True)
+        else:
+            self.loadDisplay.visualize(self.load.DICOMImages, self.load.image_pos_pat, self.load.image_ori_pat, sub=True, postS=1, interact=True)
+                   
+                   
         # extract annotation if any    
         if len(fileline) > 13:
             if fileline[13] !='NA' and fileline[13] !='[]':
