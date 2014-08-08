@@ -249,7 +249,7 @@ class Send(object):
             self.loadDisplay.picker.RemoveAllObservers()
             
             # save it to file	             
-            self.createSegment.saveSegmentation(lesionID_path, seededlesion3D) 
+            #self.createSegment.saveSegmentation(lesionID_path, seededlesion3D, lesionfilename=0) 
             self.createSegment.saveSegmentation(path_rootFolder+os.sep+'segmentations', seededlesion3D, lesionfilename=StudyID+'_'+DicomExamNumber+'_'+Lesionfile+'.vtk') 
             self.lesion3D = seededlesion3D
             

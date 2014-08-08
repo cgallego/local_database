@@ -33,7 +33,7 @@ if __name__ == '__main__':
     file_muscleVOI = open(sys.argv[2],"r")
     file_muscleVOI.seek(0)
 
-    for k in range(78):
+    for k in range(267):
         line = file_ids.readline()
         line_muscleVOI = file_muscleVOI.readline()
     print line
