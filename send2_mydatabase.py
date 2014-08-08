@@ -56,6 +56,7 @@ class Send(object):
         self.loadTexture = Texture()
         self.T2 = features_T2()  
         
+        
     def queryDatabase(self, cond, StudyID, dateID):
         """ Querying with condition (e.g: mass, non-mass)"""
         #############################
@@ -71,12 +72,16 @@ class Send(object):
         # Format query redateID
         redateID = dateID[0:4]+'-'+dateID[4:6]+'-'+dateID[6:8]
     
-        # perform query        
+        # perform query
+        noproc = False
         try:
             is_mass, colLabelsmass, is_nonmass, colLabelsnonmass = self.queryData.queryDatabase4T2(fStudyID, redateID)
+        except Exception:
+            noproc = True
             
-        except Exception: 
-            self.queryData.queryDatabasewNoGuiNodate(fStudyID)
+        if noproc:
+            is_mass, colLabelsmass, is_nonmass, colLabelsnonmass = self.queryData.queryDatabaseNoproced(fStudyID, redateID)
+            
 
         rowCase=0 
         rowCase = int(raw_input('pick row (0-n): '))
@@ -402,10 +407,17 @@ class Send(object):
         ## append collection of cases
         #############################  
         print "\n Adding record case to DB..."
-        self.records.lesion_2DB(Lesionfile, fStudyID, DicomExamNumber, str(casesFrame['exam.a_number_txt']), datetime.date(int(dateID[0:4]), int(dateID[4:6]), int(dateID[6:8])), str(casesFrame['exam.mri_cad_status_txt']), 
+        if 'proc.pt_procedure_id' in casesFrame.keys():
+            self.records.lesion_2DB(Lesionfile, fStudyID, DicomExamNumber, str(casesFrame['exam.a_number_txt']), datetime.date(int(dateID[0:4]), int(dateID[4:6]), int(dateID[6:8])), str(casesFrame['exam.mri_cad_status_txt']), 
                            str(casesFrame['cad.latest_mutation']), casesFrame['finding.mri_mass_yn'], casesFrame['finding.mri_nonmass_yn'], finding_side, str(casesFrame['proc.pt_procedure_id']), 
                             casesFrame['proc.proc_dt_datetime'], str(casesFrame['proc.proc_side_int']), str(casesFrame['proc.proc_source_int']),  str(casesFrame['proc.proc_guid_int']), 
                             str(casesFrame['proc.proc_tp_int']), str(casesFrame['exam.comment_txt']), str(casesFrame['proc.original_report_txt']), str(dataCase['finding.curve_int']), str(dataCase['finding.mri_dce_init_enh_int']), str(dataCase['finding.mri_dce_delay_enh_int']), cond,  Diagnosis)
+                            
+        if not 'proc.pt_procedure_id' in casesFrame.keys():
+            self.records.lesion_2DB(Lesionfile, fStudyID, DicomExamNumber, str(casesFrame['exam.a_number_txt']), datetime.date(int(dateID[0:4]), int(dateID[4:6]), int(dateID[6:8])), str(casesFrame['exam.mri_cad_status_txt']), 
+                           str(casesFrame['cad.latest_mutation']), casesFrame['finding.mri_mass_yn'], casesFrame['finding.mri_nonmass_yn'], finding_side, 'NA', 
+                            datetime.date(9999, 12, 31), 'NA', 'NA', 'NA', 'NA', str(casesFrame['exam.comment_txt']), 'NA', str(dataCase['finding.curve_int']), str(dataCase['finding.mri_dce_init_enh_int']), str(dataCase['finding.mri_dce_delay_enh_int']), cond,  Diagnosis)
+                            
         
         if "mass" == cond[0:-1]:
             self.records.mass_2DB(lesion_id, str(BenignNMaligNAnt), SeriesID, T2SeriesID, dataCase['finding.mammo_n_mri_mass_shape_int'], dataCase['finding.mri_mass_margin_int'] )
