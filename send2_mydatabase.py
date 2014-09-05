@@ -427,6 +427,7 @@ class Send(object):
         
         return
         
+        
     def addRecordDB_features(self, lesion_id, dyn_inside, dyn_contour, morphofeatures, texturefeatures): 
         # send features
         # Dynamic
