@@ -12,7 +12,10 @@ from sqlalchemy.orm import sessionmaker
 
 # configure Session class with desired options
 Session = sessionmaker()
-myengine = create_engine('sqlite:///C:\\Users\\windows\\Documents\\repoCode-local\\local_database\\localData.db', echo=False)
+#myengine = create_engine('sqlite:///C:\\Users\\windows\\Documents\\repoCode-local\\local_database\\localData.db', echo=False) # initially
+#myengine = create_engine('sqlite:///C:\\Users\\windows\\Documents\\repoCode-local\\stage1features\\stage1localData.db', echo=False) # now on, when adding new cases
+myengine = create_engine('sqlite:///C:\\Users\\windows\\Documents\\repoCode-local\\addnewLesion\\stage1localData.db', echo=False)
+
 
 # later, we create the engine
 Base = declarative_base(myengine)

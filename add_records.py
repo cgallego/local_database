@@ -267,3 +267,22 @@ class AddRecords(object):
             self.session.close()
             
         return     
+    
+    
+    def stage1_2DB(self, lesion_id, d_euclidean, earlySE, dce2SE, dce3SE, lateSE, ave_T2, network_meas):        
+        
+        self.session = self.Session() #instantiate a Session
+        # Send to database lesion info
+        stage1_records = mydatabase.Stage1_record(lesion_id, d_euclidean, earlySE, dce2SE, dce3SE, lateSE, ave_T2, network_meas)
+        self.session.add(stage1_records)
+        
+        # Finally send records to database
+        try:
+            self.session.commit()  
+        except:
+            self.session.rollback()
+            raise
+        finally:
+            self.session.close()
+            
+        return

@@ -2,9 +2,7 @@
 """
 Process all pipeline for a record and
 Send a record to database
-
 Created on Fri Jul 25 15:46:19 2014
-
 @ author (C) Cristina Gallego, University of Toronto
 ----------------------------------------------------------------------
  """

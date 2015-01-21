@@ -238,7 +238,7 @@ annotation = Table('annotation', metadata,
     Column('eu_dist_seg', Integer)
 )
 
-annotation = Table('segmentation', metadata,
+segmentation = Table('segmentation', metadata,
     Column('segm_id', Integer, primary_key=True),
     Column('lesion_id', ForeignKey('lesion.lesion_id', ondelete="CASCADE")),
     Column('segm_xmin', Numeric),
@@ -256,9 +256,5 @@ annotation = Table('segmentation', metadata,
 )
 
 
-        
 # configure myengine and create tables with desired options
 metadata.create_all(myengine)
-
-
-

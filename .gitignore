@@ -1,0 +1,7 @@
+/segmentations
+/Newsegmentations
+/SQLAlchemy-0.8.6
+/localDatabase
+*.pyc
+.bd
+.exe

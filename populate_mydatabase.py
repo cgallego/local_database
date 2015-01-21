@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Master python script to run each module in sequence, run in debug mode
-
 Arguments:
 ============
 sys.argv[1] = input text file with one case per line in the following format:
 cond	StudyNumber	DicomExamNumber	LesionID	StudyDate	SeriesID	BreastSide	PathReportID	PathoBreastSide	BenignNMaligNAnt	Diagnosis	T2SeriesID	annotations		
-
-
 Created on Tue Jul 15 16:48:07 2014
 @ author (C) Cristina Gallego, University of Toronto
 ----------------------------------------------------------------------
