@@ -583,3 +583,4 @@ class Stage1_record(Base):
         
     def __repr__(self):
         return "<Stage1_record(lesion_id='%s', V0='%s', V1='%s'')>" % (self.lesion_id, self.V0, self.V1)
+
